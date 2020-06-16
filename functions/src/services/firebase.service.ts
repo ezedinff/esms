@@ -23,9 +23,9 @@ export class FirebaseService {
     });
     this.database = admin.firestore();
   }
-  addMessages(message: {to: string, from: string, text: string}) {
+  addMessages(message: {to: string, from: string, text: string, status?: number}) {
     const messageDoc = this.database.collection('messages').doc();
-    return messageDoc.set(message);
+    return messageDoc.set({...message, status: message.status ? message.status : 0});
   }
   readKey() {
     return JSON.parse(fs.readFileSync('src/firebase.json').toString());
